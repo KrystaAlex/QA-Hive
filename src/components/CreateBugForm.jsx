@@ -147,7 +147,7 @@ export default function CreateBugForm({ onSubmit }) {
       )}
       <br />
 
-      <button type="submit">Create Bug</button>
+      <button type="submit">Create Post</button>
       <button type="button" onClick={handleCancel}>Cancel</button>
     </form>
   );

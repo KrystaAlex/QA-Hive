@@ -1,5 +1,11 @@
-export default function HomeFeed() {
+import PostContainer from "../components/PostContainer";
+
+export default function HomeFeed({bugFeed}) {
+
+return (
     <>
-    <div>List of bugs placeholder</div>
+    <h1>Bug Feed</h1>
+    <PostContainer bugFeed={bugFeed} />
     </>
+)
 }

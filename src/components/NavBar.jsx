@@ -9,7 +9,7 @@ export default function NavBar() {
       <Link to="/">Home</Link>
     </li>
     <li>
-    <Link to="/create">Create Bug Form</Link>
+    <Link to="/create">Create Post</Link>
     </li>
    </ul>
     </nav>
