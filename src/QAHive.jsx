@@ -1,19 +1,19 @@
 import { Routes, Route } from 'react-router-dom'
 import NavBar from './components/NavBar'
-import SubmitBug from './components/SubmitBug'
-import Home from './pages/Home'
+import CreateBugPage from './pages/CreateBugPage'
+import HomeFeed from './pages/HomeFeed'
 import './QAHive.css'
 
-function QAHive() {
+export default function QAHive() {
   return (
     <>
     <NavBar />
     <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/submit" element={<SubmitBug />} />
+      <Route path="/" element={<HomeFeed />} />
+      <Route path="/create" element={<CreateBugPage />} />
     </Routes>
     </>
   )
 }
 
-export default QAHive
+
