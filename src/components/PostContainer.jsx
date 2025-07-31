@@ -1,4 +1,5 @@
 import { format } from "date-fns";
+import { Link } from "react-router-dom";
 
 export default function PostContainer({ bugPostFeed }) {
   if (!bugPostFeed || bugPostFeed.length === 0) {
@@ -12,7 +13,9 @@ export default function PostContainer({ bugPostFeed }) {
 
         return (
           <div key={index}>
-            <h3>{bugPost.title}</h3>
+            <h3>
+           <Link to={`/posts/${bugPost.id}`}>{bugPost.title}</Link> 
+            </h3>
             <p>Type: {bugPost.type}</p>
             <p>{bugPost.description}</p>
             {isValidDate ? (
