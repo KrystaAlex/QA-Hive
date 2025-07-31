@@ -58,7 +58,7 @@ export default function CreateBugForm({ onSubmit }) {
 
   return (
     <form onSubmit={handleSubmit}>
-      <h2>Submit a New Bug</h2>
+      <h2>Submit a New Bug Post</h2>
 
       <label>
         Title:
@@ -146,7 +146,6 @@ export default function CreateBugForm({ onSubmit }) {
         </div>
       )}
       <br />
-
       <button type="submit">Create Post</button>
       <button type="button" onClick={handleCancel}>Cancel</button>
     </form>

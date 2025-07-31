@@ -8,7 +8,6 @@ export default function CreatePostPage({onSubmit}) {
     
     return (
     <>
-    <h1>Submit a new post</h1>
     <CreateBugForm onSubmit={handleBugSubmit}/>
     </>
     )
