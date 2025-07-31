@@ -1,6 +1,7 @@
 import { useState } from "react";
-
-export default function CreateBugForm({ onSubmit }) {
+import { supabase } from "../supabaseClient";
+//need to add expected results and actual results
+export default function CreateBugForm() {
   const [form, setForm] = useState({
     title: '',
     description: '',
@@ -20,30 +21,67 @@ export default function CreateBugForm({ onSubmit }) {
     setForm(prev => ({ ...prev, screenshot: file }));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+ const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    const newBug = {
-      ...form,
-      id: Date.now(),
-      createdAt: new Date().toISOString()
-    };
+    const { title, description, type, severity, tags, screenshot } = form;
+    let screenshot_url = null;
+    let fileName = null;
 
-    if (onSubmit) {
-      onSubmit(newBug);
+  if (screenshot) {
+    fileName = `${Date.now()}_${screenshot.name}`;
+    //upload
+    const { error: uploadError } = await supabase.storage
+      .from("screenshots")
+      .upload(fileName, form.screenshot);
+
+    if (uploadError) {
+      console.error("Upload failed:", uploadError);
+      return;
     }
+    //get public URL
+    const { publicURL, error: urlError } = supabase.storage
+      .from("screenshots")
+      .getPublicUrl(fileName);
 
-    console.log('Bug Submitted:', newBug);
+    if (urlError) {
+      console.error("Error getting public URL:", urlError);
+      return;
+    }
+    //assign to variable
+    screenshot_url = publicURL; 
+  }
 
-    setForm({
-      title: '',
-      description: '',
-      type: '',
-      severity: '',
-      screenshot: null,
-      tags: ''
-    });
-  };
+
+
+  const { data, error } = await supabase.from("posts").insert([
+    {
+      title,
+      description,
+      type,
+      severity,
+      tags,
+      screenshot_url,
+      created_at: new Date().toISOString()
+    },
+  ]);
+
+  if (error) {
+    console.error("Insert error:", error);
+  } else {
+    console.log("Bug Submitted:", data);
+  }
+
+  setForm({
+    title: '',
+    description: '',
+    type: '',
+    severity: '',
+    screenshot: null,
+    tags: ''
+  });
+};
+
 
   const handleCancel = () => {
     setForm({
@@ -55,6 +93,7 @@ export default function CreateBugForm({ onSubmit }) {
       tags: ''
     });
   };
+  
 
   return (
     <form onSubmit={handleSubmit}>
